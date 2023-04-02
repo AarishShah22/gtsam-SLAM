@@ -44,7 +44,7 @@ The VERTEX_SE2 data represents the robot's pose data at different timesteps. The
 
 ## 2D SLAM
 
-Use the "input_INTEL_g2o.g2o" for 2D SLAM. 
+Use the "input_INTEL_g2o.g2o" for 2D SLAM.
 
 ### Batch
 
