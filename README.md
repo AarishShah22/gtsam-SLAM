@@ -1,6 +1,6 @@
 # Implementation of SLAM using the GTSAM Library
 
-This repository contains the implementation of 2D and 3D SLAM using the GTSAM Library. For both cases, Batch as well as Incremental methods were used and their performance was compared.
+This repository contains the implementation of 2D and 3D SLAM using the GTSAM Library. The SLAM problem was solved by using Factor Graphs. For both cases, Batch as well as Incremental methods were used and their performance was compared. 
 
 ## GTSAM Installation
 
@@ -38,28 +38,34 @@ in the first cell of your Jupyter notebook.
 
 ## G2O files
 
-TODO
+I have used datasets using G2O files for running SLAM. You can learn more about G2O files [here](https://github.com/RainerKuemmerle/g2o/wiki/File-Format-SLAM-2D).
+
+The VERTEX_SE2 data represents the robot's pose data at different timesteps. The EDGE_SE2 data represents the connections between the poses (constraints).
 
 ## 2D SLAM
 
-TODO 
+Use the "input_INTEL_g2o.g2o" for 2D SLAM. 
 
 ### Batch
 
-TODO
+First, we create a Pose Graph, based on the vertices and edges data given to us. Then, we optimize the entire graph as a batch. 
+
+We construct the graph:
+
+```
+graph = gtsam.NonLinearFactorGraph()
+```
+
+Further, we use the Gauss Newton Optimizer for optimization. Optimization is essentially trying to solve the least-squares problem. The goal is to minimize the error between estimated and measured values. When a loop closure case occurs, the optimization is more constrained, thus the measurement drift is better accounted for. 
 
 ### Incremental
 
-TODO
+For the incremental solution, the poses and edges are added to the factor graph one by one. After each pose and edge pair is added to the factor graph one by one. After each pose and edge pair is added, we optimize it and then move on to the next measurement. This method is useful for real-time SLAM.
+
+We use the ISAM solver to optimize the solutions. 
 
 ## 3D SLAM
 
-TODO
+Use the "parking-garage.g2o" for 2D SLAM. 
 
-### Batch
-
-TODO
-
-### Incremental
-
-TODO
+3D SLAM was also implemented in Batch and Incremental mode.
